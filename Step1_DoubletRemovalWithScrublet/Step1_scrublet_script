@@ -1,0 +1,44 @@
+#import libraries
+import scanpy as sc
+import scrublet as scr
+import pandas as pd
+
+#Run scrublet with default and custom thresholds
+#--------------------------------------WT 12 weeks------------------------------------------------------------------
+wt_adata = sc.read_10x_h5("./cellranger_results/wt12/outs/filtered_feature_bc_matrix.h5")
+wt_adata.var_names_make_unique()
+wt_adata
+
+scrub = scr.Scrublet(wt_adata.X)
+predicted_doublets2 = scrub.call_doublets(threshold=0.18)
+doublet_scores, predicted_doublets = scrub.scrub_doublets()
+
+wt_adata.obs["doublet_scores"] = doublet_scores
+wt_adata.obs["predicted_doublets"] = predicted_doublets
+wt_adata.obs["predicted_doublets0_18"] = predicted_doublets2
+
+scrub.plot_histogram();
+scrub.set_embedding('UMAP', scr.get_umap(scrub.manifold_obs_, 10, min_dist=0.3))
+scrub.plot_embedding('UMAP', order_points=True);
+doublets_WT = pd.DataFrame(wt_adata.obs)
+doublets_WT.to_csv("WT12_scrublet_results.csv")
+
+#-------------------------------------DARE 12 weeks-----------------------------------------------------------------
+dare_adata = sc.read_10x_h5("./cellranger_results/dare12/outs/filtered_feature_bc_matrix.h5")
+dare_adata.var_names_make_unique()
+dare_adata
+
+scrub2 = scr.Scrublet(dare_adata.X)
+predicted_doublets_d2 = scrub2.call_doublets(threshold=0.20)
+doublet_scores_d, predicted_doublets_d = scrub2.scrub_doublets()
+
+dare_adata.obs["doublet_scores"] = doublet_scores_d
+dare_adata.obs["predicted_doublets"] = predicted_doublets_d
+dare_adata.obs["predicted_doublets0_20"] = predicted_doublets_d2
+
+scrub2.plot_histogram();
+predicted_doublets_d2 = scrub2.call_doublets(threshold=0.20)
+scrub2.set_embedding('UMAP', scr.get_umap(scrub2.manifold_obs_, 10, min_dist=0.3))
+scrub2.plot_embedding('UMAP', order_points=True);
+doublets_DARE = pd.DataFrame(dare_adata.obs)
+doublets_DARE.to_csv("DARE12_scrublet_results.csv")

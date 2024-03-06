@@ -1,0 +1,5 @@
+# Wt 12 weeks sample
+/Tools/cellranger-7.0.1/cellranger count --id=wt_count --transcriptome=/resources/reference/refdata-gex-mm10-2020-A --fastqs=/WT_fastqs/ --sample=wt --localcores=20 --localmem=100
+
+# Dare 12 weeks sample
+/Tools/cellranger-7.0.1/cellranger count --id=dare_count --transcriptome=/resources/reference/refdata-gex-mm10-2020-A --fastqs=/DARE_fastqs/ --sample=DARE --localcores=20 --localmem=100
