@@ -54,4 +54,4 @@ cp2$labels$caption <- NULL
 cowplot::plot_grid(cp1, cp2,
                    labels = c('Wt','DARE'),
                    ncol = 1, align = "v", label_size = 24)
-ggsave("Fig1d_contour_plots.pdf", device = "pdf", width = 25, height = 40, units = "cm", dpi = 600)
+ggsave("Fig1d.pdf", device = "pdf", width = 25, height = 40, units = "cm", dpi = 600)
