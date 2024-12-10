@@ -12,43 +12,91 @@ obj$sample <- factor(obj$sample, levels = c("wt-12w", "dare-12w"))
 
 obj_list <- SplitObject(obj, split.by = "sample")
 
-#UMAP plot for WT
-g1 <- DimPlot_scCustom(obj_list[[1]], group.by = "annotation", colors_use = c("#CEB2DF", "#E4A149", "#7B78D9", "#B940E1", "#D9A99C", "#D5E2D6", 
-                                                              "#70B3D6", "#D76DC6", "#DC637B", "#70E16E", "#7BE9CE", "#D0E24B",
-                                                              "#D2DE95", "#7C8E66"), 
-                 figure_plot = F, 
+#---UMAP plot for WT---
+umap1 <- DimPlot_scCustom(obj_list[[1]], group.by = "annotation", colors_use = c("#CEB2DF", "#E4A149", "#7B78D9", "#B940E1", "#D9A99C", "#D5E2D6", 
+                                                                                 "#70B3D6", "#D76DC6", "#DC637B", "#70E16E", "#7BE9CE", "#D0E24B",
+                                                                                 "#D2DE95", "#7C8E66"), 
+                 figure_plot = T, 
                  split_seurat = F,
                  label = T, 
                  pt.size = 0.8, 
                  repel = T
-) + theme(legend.position = "none", 
+) & theme(legend.position = "none", 
           line = element_blank(), 
-          axis.title.x = element_blank(), 
-          axis.title.y = element_blank(),
           axis.text.x = element_blank(),
           axis.text.y = element_blank(),
-          plot.title = element_text(hjust = 0.5, size = 25)) + 
-  labs(title = expression(italic('Tnf'^'+/+')))
+          plot.title = element_text(hjust = 0.5, size = 25))
 
-
-#UMAP plot for DARE
-g2 <- DimPlot_scCustom(obj_list[[2]], group.by = "annotation", colors_use = c("#CEB2DF", "#E4A149", "#7B78D9", "#B940E1", "#D9A99C", "#D5E2D6", 
-                                                                              "#70B3D6", "#D76DC6", "#DC637B", "#70E16E", "#7BE9CE", "#D0E24B",
-                                                                              "#D2DE95", "#7C8E66"), 
-                       figure_plot = F, 
-                       split_seurat = F,
-                       label = T, 
-                       pt.size = 0.8, 
-                       repel = T
-) + theme(legend.position = "right", 
+#---UMAP for DARE---
+umap2 <- DimPlot_scCustom(obj_list[[2]], group.by = "annotation", colors_use = c("#CEB2DF", "#E4A149", "#7B78D9", "#B940E1", "#D9A99C", "#D5E2D6", 
+                                                                                 "#70B3D6", "#D76DC6", "#DC637B", "#70E16E", "#7BE9CE", "#D0E24B",
+                                                                                 "#D2DE95", "#7C8E66"), 
+                          figure_plot = T, 
+                          split_seurat = F,
+                          label = T, 
+                          pt.size = 0.8, 
+                          repel = T
+) & theme(legend.position = "none", 
           line = element_blank(), 
-          axis.title.x = element_blank(), 
-          axis.title.y = element_blank(),
           axis.text.x = element_blank(),
           axis.text.y = element_blank(),
-          plot.title = element_text(hjust = 0.5, size = 25)) + 
-  labs(title = expression(italic('Tnf'^'DARE')))
+          plot.title = element_text(hjust = 0.5, size = 25))
 
-#Combination of plots with patchwork
-g1 + g2 + plot_annotation(title = 'Myeloid', theme = theme(plot.title = element_text(size = 20, hjust = 0.4)))
-ggsave("Fig1c.pdf", device = "pdf", width = 30, height = 20, units = "cm", dpi = 600)
+
+#UMAP plot to get the color legend
+umap3 <- DimPlot_scCustom(obj, group.by = "annotation", colors_use = c("#CEB2DF", "#E4A149", "#7B78D9", "#B940E1", "#D9A99C", "#D5E2D6", 
+                                                                                 "#70B3D6", "#D76DC6", "#DC637B", "#70E16E", "#7BE9CE", "#D0E24B",
+                                                                                 "#D2DE95", "#7C8E66")
+                          )
+col_legend <- get_legend(umap3)
+
+#---customise WT umap--- 
+plot1 <- umap1[[2]] 
+plot2 <- umap1[[1]] + ggtitle(expression(italic('Tnf'^'+/+')))
+
+# Create an empty placeholder for the top part of the umap axes
+empty_top <- plot_grid(NULL, ncol = 1)
+
+# Create the axes with an empty top area
+small_plot_with_space <- plot_grid(
+  empty_top, plot1, 
+  nrow = 2, 
+  rel_heights = c(3, 1) # Empty space (3/4) above the umap axes (1/4)
+)
+
+# Combine the umap axes (on the left) with the umap scatter (on the right)
+g1 <- plot_grid(
+  small_plot_with_space, plot2, 
+  ncol = 2, 
+  rel_widths = c(1, 3) # Small plot takes 1/4 of the width
+)
+
+#---customise DARE umap--- 
+plot3 <- umap2[[2]] 
+plot4 <- umap2[[1]] + ggtitle(expression(italic('Tnf'^'DARE')))
+
+# Create an empty placeholder for the top part of the umap axes
+empty_top2 <- plot_grid(NULL, ncol = 1)
+
+# Create the axes with an empty top area
+small_plot_with_space2 <- plot_grid(
+  empty_top2, plot3, 
+  nrow = 2, 
+  rel_heights = c(3, 1) # Empty space (3/4) above the umap axes (1/4)
+)
+
+# Combine the umap axes (on the left) with the umap scatter (on the right)
+g2 <- plot_grid(
+  small_plot_with_space2, plot4, 
+  ncol = 2, 
+  rel_widths = c(1, 3) # Small plot takes 1/4 of the width
+)
+
+#Plot with legend and save
+plot_grid(
+  g1+g2,
+  col_legend,                         
+  ncol = 2,                            
+  rel_widths = c(5, 1)
+)
+ggsave("Fig1c.pdf", device = "pdf", width = 39, height = 17, units = "cm", dpi = 600)
