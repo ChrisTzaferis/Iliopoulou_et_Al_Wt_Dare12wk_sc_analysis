@@ -1,4 +1,4 @@
-# This repository contains the different scripts that were used for the analysis of the scRNA-seq data of Wt and Dare 12 weeks mice.
+# This repository contains all the scripts that were used for the bioinformatics analysis of the scRNA-seq data of Wt and Dare 12 weeks mice.
 
 ## Starting from raw data
 + Scripts included in Step0 and Step1 folders are useful for the readers who wish to start from the raw data (*.fastq files).
