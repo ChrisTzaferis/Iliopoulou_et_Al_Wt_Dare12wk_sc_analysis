@@ -64,6 +64,7 @@ myeloid <- RenameIdents(myeloid, new.cluster.ids)
 
 #exclusion of a mixed MF population
 myeloid <- subset(myeloid, idents = c("Mixed_Mf_popul"), invert = T)
+myeloid <- FindNeighbors(myeloid, reduction = "pca", dims = 1:23)
 DimPlot_scCustom(myeloid)
 myeloid$annotation <- Idents(myeloid)
 saveRDS(myeloid, "WT12wk_DARE12Wk_Myeloid_annotated.RDS")
