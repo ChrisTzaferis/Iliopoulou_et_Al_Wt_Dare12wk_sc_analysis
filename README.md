@@ -11,5 +11,6 @@
 4. Download the files _**wt12_matrix.mtx.gz, wt12_features.tsv.gz, wt12_barcodes.tsv.gz**_ from the GEO repository of the study and place them in the first sub-directory _**"GEO_files/PROCESSED/WT12/"**_.
 5. Download the files _**dare12_matrix.mtx.gz, dare12_features.tsv.gz, dare12_barcodes.tsv.gz**_ from the GEO repository of the study and place them in the second sub-directory _**"GEO_files/PROCESSED/DARE12/"**_.
 6. Rename the files that were placed in the sub-directories described above as: _**matrix.mtx.gz, features.tsv.gz, barcodes.tsv.gz**_.
-7. Now you can execute sequentially the scripts in the folders _**Step2_InitialSeuratObjects, ..., Step7_Annotation_of_clusters**_.
-8. Please note that you need to set the working directory to the folder that contains the script that is currently executed. 
+7. Now you can execute sequentially the scripts in the folders _**Step2_InitialSeuratObjects, ..., Step10_Comparison_with_acuteDSS**_.
+8. Please note that you need to set the working directory to the folder that contains the script that is currently executed.
+9. To replicate the plots included in the main and supplementary figures of the manuscript you can execute the scripts inside the folder _**Generate_plots**_ after the completion of the previous steps. 
