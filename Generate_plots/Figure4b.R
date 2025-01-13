@@ -19,8 +19,8 @@ for (i in 1:length(object.list)) {
 }
 
 #save scatter plots
-p1 <- gg[[1]] + theme(text = element_text(size = 18), plot.title = element_text(hjust = 0.5, size = 25)) + xlim(0, 100) + ylim(0, 80) + ggtitle(expression(bolditalic('Tnf'^'+/+')))
-p2 <- gg[[2]] + theme(text = element_text(size = 18), plot.title = element_text(hjust = 0.5, size = 25)) + xlim(0, 100) + ylim(0, 80) + ggtitle(expression(bolditalic('Tnf'^'DARE')))
+p1 <- gg[[1]] + theme(text = element_text(size = 18), plot.title = element_text(hjust = 0.5, size = 25)) + xlim(0, 115) + ylim(0, 80) + ggtitle(expression(bolditalic('Tnf'^'+/+')))
+p2 <- gg[[2]] + theme(text = element_text(size = 18), plot.title = element_text(hjust = 0.5, size = 25)) + xlim(0, 115) + ylim(0, 80) + ggtitle(expression(bolditalic('Tnf'^'DARE')))
 
 p1+p2
 ggsave(filename = "Fig4b.pdf", device = "pdf", width = 32, height = 20, units = "cm", dpi = 600)
