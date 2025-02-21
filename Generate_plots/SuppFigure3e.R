@@ -87,7 +87,7 @@ g1 <- ggplot(final_df1, aes(y=Percentage, fill=sample, x=sample )) +
   theme_bw() + 
   facet_wrap(~bin, ncol = 5) + 
   geom_bar(stat = "identity" ) +
-  scale_fill_manual(values = c("darkgreen", "red4"), 
+  scale_fill_manual(values = c("#DDCC77", "#882255"), 
                     labels = c("wt-12w"= expression('Tnf'^'+/+'), "dare-12w" = expression('Tnf'^'DARE'))) +
   theme(legend.position="right", 
         axis.title.x = element_blank(),
@@ -119,7 +119,7 @@ g2 <- ggplot(final_df2, aes(y=Percentage, fill=sample, x=sample )) +
   theme_bw() + 
   facet_wrap(~bin, ncol = 5) + 
   geom_bar(stat = "identity" ) +
-  scale_fill_manual(values = c("darkgreen", "red4"), 
+  scale_fill_manual(values = c("#DDCC77", "#882255"), 
                     labels = c("wt-12w"= expression('Tnf'^'+/+'), "dare-12w" = expression('Tnf'^'DARE'))) +
   theme(legend.position="right", 
         axis.title.x = element_blank(),

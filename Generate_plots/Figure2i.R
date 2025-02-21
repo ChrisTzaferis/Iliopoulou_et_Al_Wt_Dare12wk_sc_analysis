@@ -11,10 +11,10 @@ obj$sample <- factor(obj$sample, levels = c("wt-12w", "dare-12w"))
 
 #keep macrophages 
 obj <- subset(obj, idents = c("Monocytes", "Intermediate_Mfs", "Activated_Mfs", "Resident_Mfs"))
-cols <- c("cornflowerblue", "aquamarine4", "darkgoldenrod", "red3")
 Idents(obj) <- obj$sample
 wt <- subset(obj, idents = "wt-12w")
 dare <- subset(obj, idents = "dare-12w")
+cols <- c("#D4D8DA", "#B2DFEE", "#DDCC77", "#882255")
 
 #Wt umap
 p1 <- dittoDimPlot(wt, var = "annotation", color.panel = cols, size = 1.4, show.axes.numbers = F, show.grid.lines = F, 
@@ -44,8 +44,8 @@ ggsave("Fig2i_umap.pdf", device = "pdf", width = 10, height = 25, units = "cm", 
 
 #Barplot
 obj$seurat_clusters <- obj$annotation
-obj$seurat_clusters <- factor(obj$seurat_clusters, levels = c("Activated_Mfs", "Intermediate_Mfs", "Monocytes", "Resident_Mfs"))
-plot_stat(obj, plot_type = "prop_fill", group_by = "sample", pal_setup = c("red3", "aquamarine4", "cornflowerblue", "darkgoldenrod")) + 
+obj$seurat_clusters <- factor(obj$seurat_clusters, levels = c("Activated_Mfs", "Resident_Mfs", "Intermediate_Mfs", "Monocytes"))
+plot_stat(obj, plot_type = "prop_fill", group_by = "sample", pal_setup = rev(cols)) + 
   scale_x_discrete(labels=c("wt-12w" = expression(italic("Tnf"^"+/+")), "dare-12w" = expression(italic("Tnf"^"DARE")) )) +
   theme_classic() + 
   theme(legend.position = "right", 
